@@ -67,7 +67,9 @@ function selectСurrentВate() {
         timerHtml.style.color = 'red';
       }
     } else {
-      Notiflix.Notify.success('Countdown finished');
+      Notiflix.Notify.success('Countdown finished', {
+        timeout: 6000,
+      });
       timerHtml.style.color = 'black';
       clearInterval(timer);
     }
