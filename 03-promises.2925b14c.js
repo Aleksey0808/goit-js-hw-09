@@ -1,2 +1,0 @@
-({form:document.querySelector(".form"),delay:document.querySelector('input[name="delay"]'),step:document.querySelector('input[name="step"]'),amount:document.querySelector('input[name="amount"]'),button:document.querySelector('button[type="submit"]')}).form.addEventListener("click",(function(e,t){Math.random()>.3?console.log("okey"):console.log("false")}));
-//# sourceMappingURL=03-promises.2925b14c.js.map
