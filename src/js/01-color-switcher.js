@@ -1,7 +1,7 @@
 const refs = {
-    start: document.querySelector("button[data-start]"),
-    stop: document.querySelector("button[data-stop]")
-}
+  start: document.querySelector('button[data-start]'),
+  stop: document.querySelector('button[data-stop]'),
+};
 
 let colorId = null;
 
@@ -9,20 +9,28 @@ refs.start.addEventListener('click', colorBodyStart);
 refs.stop.addEventListener('click', colorBodyStop);
 
 function colorBodyStart() {
-    refs.start.setAttribute("disabled", "disabled");
-    refs.stop.removeAttribute("disabled", "disabled")
-    
-   colorId = setInterval(() => {
+  disabled(refs.start, refs.stop);
+
+  colorId = setInterval(() => {
     document.body.style.backgroundColor = getRandomHexColor();
-}, 1000);
-};
+  }, 1000);
+}
 
 function colorBodyStop() {
-    clearInterval(colorId);
-    refs.start.removeAttribute("disabled", "disabled");
-    refs.stop.setAttribute("disabled", "disabled");
-};
+  clearInterval(colorId);
+  disabled(refs.start, refs.stop);
+}
 
 function getRandomHexColor() {
-    return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-  };
+  return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+}
+
+function disabled(start, stop) {
+  if (start.disabled && !stop.disabled) {
+    start.disabled = false;
+    stop.disabled = true;
+  } else {
+    start.disabled = true;
+    stop.disabled = false;
+  }
+}

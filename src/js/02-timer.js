@@ -12,6 +12,9 @@ const refs = {
   timerHtml: document.querySelector('.timer'),
 };
 
+const currentTime = Date.now();
+let dateCounter = 1000;
+
 refs.start.addEventListener('click', selectСurrentВate);
 
 refs.start.disabled = true;
@@ -21,13 +24,9 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
-  onClose(selectedDates) {
-    if (selectedDates[0] < new Date()) {
-      Notiflix.Notify.failure('Please choose a date in the future');
-      refs.start.disabled = true;
-    } else {
-      refs.start.disabled = false;
-    }
+  onClose([selectedDates]) {
+    selectedDate = selectedDates.getTime();
+    correctDate(selectedDate);
   },
 };
 
@@ -52,26 +51,34 @@ function addLeadingZero(value) {
 
 function selectСurrentВate() {
   let timer = setInterval(() => {
-    const currentTime = new Date(refs.text.value) - new Date();
+    let dateTime = selectedDate - currentTime - dateCounter;
 
-    refs.start.disabled = true;
+    dateCounter += 1000;
 
-    if (currentTime >= 0) {
-      let timeObject = convertMs(currentTime);
-      refs.day.textContent = addLeadingZero(timeObject.days);
-      refs.hours.textContent = addLeadingZero(timeObject.hours);
-      refs.minutes.textContent = addLeadingZero(timeObject.minutes);
-      refs.seconds.textContent = addLeadingZero(timeObject.seconds);
-
-      if (currentTime <= 10000) {
-        timerHtml.style.color = 'red';
-      }
-    } else {
-      Notiflix.Notify.success('Countdown finished', {
-        timeout: 6000,
-      });
-      timerHtml.style.color = 'black';
+    if (dateTime < 1000) {
       clearInterval(timer);
     }
+    refs.start.disabled = true;
+
+    renderingDom(dateTime);
   }, 1000);
+}
+
+function correctDate(selectedDate) {
+  const lastDate = selectedDate > currentTime;
+
+  if (!lastDate) {
+    Notiflix.Notify.failure('Please choose a date in the future');
+    return;
+  }
+  refs.start.disabled = false;
+  return;
+}
+
+function renderingDom(time) {
+  let { days, hours, minutes, seconds } = convertMs(time);
+  refs.day.textContent = addLeadingZero(days);
+  refs.hours.textContent = addLeadingZero(hours);
+  refs.minutes.textContent = addLeadingZero(minutes);
+  refs.seconds.textContent = addLeadingZero(seconds);
 }
