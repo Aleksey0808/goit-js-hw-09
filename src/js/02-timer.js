@@ -50,6 +50,9 @@ function addLeadingZero(value) {
 }
 
 function selectСurrentВate() {
+  refs.start.disabled = true;
+  refs.text.disabled = true;
+
   let timer = setInterval(() => {
     let dateTime = selectedDate - currentTime - dateCounter;
 
@@ -58,8 +61,6 @@ function selectСurrentВate() {
     if (dateTime < 1000) {
       clearInterval(timer);
     }
-    refs.start.disabled = true;
-    refs.text.disabled = true;
 
     renderingDom(dateTime);
   }, 1000);
