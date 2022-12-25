@@ -14,6 +14,7 @@ const refs = {
 
 const currentTime = Date.now();
 let dateCounter = 1000;
+let selectedDate = 0;
 
 refs.start.addEventListener('click', selectСurrentВate);
 
