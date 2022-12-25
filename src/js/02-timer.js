@@ -59,6 +59,7 @@ function selectСurrentВate() {
       clearInterval(timer);
     }
     refs.start.disabled = true;
+    refs.text.disabled = true;
 
     renderingDom(dateTime);
   }, 1000);
